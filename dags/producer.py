@@ -11,7 +11,8 @@ with DAG(
     start_date=datetime(2021, 1, 1),
     catchup=False
 ):
-    @task
+    # indica ao airflow que a task "update_dataset" atualiza o Dataset my_file, assim que essa tarefa for bem sucedida...a próxima DAG será startada
+    @task(outlets=[my_file])
     def update_dataset():
         with open(my_file.uri, "a+") as f:
             f.write("producer update")
